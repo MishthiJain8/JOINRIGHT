@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test - Meeting Creation</title>
+</head>
+<body>
+    <h1>Meeting API Test</h1>
+    <button onclick="testAPI()">Test Meeting Creation API</button>
+    <div id="results"></div>
+
+    <script>
+        async function testAPI() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<p>Testing API...</p>';
+
+            try {
+                // Test 1: Health endpoint
+                console.log('Testing health endpoint...');
+                const healthRes = await fetch('http://localhost:5000/api/health');
+                const healthData = await healthRes.json();
+                console.log('Health check:', healthData);
+                
+                // Test 2: Meeting creation
+                console.log('Testing meeting creation...');
+                const meetingData = {
+                    title: "Test Meeting from Browser",
+                    password: "testpass123", 
+                    description: "Test description",
+                    scheduledAt: new Date(Date.now() + 60*60*1000).toISOString(), // 1 hour from now
+                    creator: "test@example.com",
+                    settings: {
+                        allowScreenShare: true,
+                        allowChat: true,
+                        allowRecording: true,
+                        waitingRoom: false,
+                        muteOnEntry: false
+                    }
+                };
+
+                console.log('Sending request with data:', meetingData);
+                
+                const response = await fetch('http://localhost:5000/api/meetings/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(meetingData)
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                if (data.success) {
+                    results.innerHTML = `
+                        <h2>✅ SUCCESS</h2>
+                        <p><strong>Health Check:</strong> ${healthData.status}</p>
+                        <p><strong>Meeting Created:</strong> ${data.meeting.title}</p>
+                        <p><strong>Meeting ID:</strong> ${data.meeting.meetingId}</p>
+                        <p><strong>Backend Connection:</strong> Working</p>
+                    `;
+                } else {
+                    results.innerHTML = `
+                        <h2>❌ FAILED</h2>
+                        <p><strong>Error:</strong> ${data.error || 'Unknown error'}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('API test error:', error);
+                results.innerHTML = `
+                    <h2>❌ CONNECTION ERROR</h2>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Type:</strong> ${error.name}</p>
+                    <p>This usually means the backend server is not running or there's a CORS issue.</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

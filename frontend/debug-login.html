@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Login Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .result { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 3px; }
+        .error { background: #ffe6e6; border: 1px solid #ffcdd2; }
+        .success { background: #e8f5e8; border: 1px solid #c8e6c8; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐛 Login & Admin Dashboard Debug Tool</h1>
+        
+        <div class="section">
+            <h2>Step 1: Test Login API</h2>
+            <button onclick="testLogin()">Test Admin Login</button>
+            <div id="loginResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h2>Step 2: Check LocalStorage</h2>
+            <button onclick="checkStorage()">Check Stored Auth Data</button>
+            <div id="storageResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h2>Step 3: Test Admin API</h2>
+            <button onclick="testAdminAPI()">Test Admin Health Endpoint</button>
+            <div id="adminResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h2>Step 4: Manual Login & Redirect</h2>
+            <button onclick="manualLogin()">Login and Go to Admin Dashboard</button>
+            <div id="manualResult" class="result"></div>
+        </div>
+
+        <div class="section">
+            <h2>Current Page Info</h2>
+            <div id="pageInfo" class="result">
+                <strong>Current URL:</strong> <span id="currentUrl"></span><br>
+                <strong>Frontend Running On:</strong> <span id="frontendUrl"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+        
+        // Update page info
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('frontendUrl').textContent = window.location.origin;
+
+        async function testLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = 'Testing login...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/login/direct`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@jointright.com',
+                        password: 'admin123456'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Store in localStorage like the real app does
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <strong>✅ Login Successful!</strong><br>
+                        <strong>User:</strong> ${data.user.email}<br>
+                        <strong>Role:</strong> ${data.user.role}<br>
+                        <strong>Token:</strong> ${data.token.substring(0, 50)}...<br>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ Login Failed: ${data.error || 'Unknown error'}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ Network Error: ${error.message}`;
+            }
+        }
+
+        function checkStorage() {
+            const resultDiv = document.getElementById('storageResult');
+            
+            const authToken = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            let userObj = null;
+            try {
+                userObj = JSON.parse(userData || 'null');
+            } catch (e) {
+                // ignore
+            }
+
+            resultDiv.innerHTML = `
+                <strong>📦 LocalStorage Contents:</strong><br>
+                <strong>authToken:</strong> ${authToken ? authToken.substring(0, 50) + '...' : 'null'}<br>
+                <strong>isLoggedIn:</strong> ${isLoggedIn}<br>
+                <strong>userData:</strong> ${userObj ? JSON.stringify(userObj, null, 2) : 'null'}
+            `;
+        }
+
+        async function testAdminAPI() {
+            const resultDiv = document.getElementById('adminResult');
+            const token = localStorage.getItem('authToken');
+            
+            if (!token) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '❌ No auth token found. Please login first.';
+                return;
+            }
+
+            resultDiv.innerHTML = 'Testing admin API...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/health`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <strong>✅ Admin API Working!</strong><br>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ Admin API Error: ${data.error || 'Unknown error'}<br>
+                        Status: ${response.status}<br>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ Network Error: ${error.message}`;
+            }
+        }
+
+        async function manualLogin() {
+            const resultDiv = document.getElementById('manualResult');
+            
+            // First login
+            await testLogin();
+            
+            // Wait a moment
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Check if we have token
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            
+            if (!token || !userData) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '❌ Login failed - no token or user data stored';
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userData);
+                if (user.role === 'admin') {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        ✅ Admin login successful! Redirecting to admin dashboard...<br>
+                        <a href="http://localhost:3000/admin" target="_blank">Click here if redirect doesn't work</a>
+                    `;
+                    
+                    // Try to redirect
+                    setTimeout(() => {
+                        window.location.href = 'http://localhost:3000/admin';
+                    }, 2000);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ User role is '${user.role}', not 'admin'`;
+                }
+            } catch (e) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ Error parsing user data: ${e.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

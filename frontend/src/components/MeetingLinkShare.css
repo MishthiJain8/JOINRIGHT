@@ -1,0 +1,569 @@
+.meeting-share-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.meeting-share-modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.meeting-share-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid #f1f5f9;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  border-radius: 16px 16px 0 0;
+}
+
+.meeting-share-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.meeting-share-content {
+  padding: 2rem;
+}
+
+/* Meeting Info Card */
+.meeting-info-card {
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #e2e8f0;
+}
+
+.meeting-info-card h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.meeting-details {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-item label {
+  font-weight: 600;
+  color: #475569;
+  min-width: 100px;
+}
+
+.meeting-id, .password {
+  background: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+/* Share Links */
+.share-links {
+  margin-bottom: 2rem;
+}
+
+.share-option {
+  margin-bottom: 1.5rem;
+}
+
+.share-option label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.link-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.link-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #f9fafb;
+  color: #374151;
+  font-family: 'Courier New', monospace;
+}
+
+.link-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.copy-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+}
+
+.copy-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.copy-btn.copied {
+  background: #10b981;
+  transform: scale(1.05);
+}
+
+.copy-btn.small {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  min-width: 35px;
+}
+
+.credentials-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.credential-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.credential-item span {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Share Actions */
+.share-actions {
+  margin-bottom: 2rem;
+}
+
+.share-actions h5 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.share-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn.whatsapp {
+  background: #25d366;
+  color: white;
+}
+
+.share-btn.whatsapp:hover {
+  background: #20c258;
+}
+
+.share-btn.telegram {
+  background: #0088cc;
+  color: white;
+}
+
+.share-btn.telegram:hover {
+  background: #007bb5;
+}
+
+.share-btn.email {
+  background: #ea4335;
+  color: white;
+}
+
+.share-btn.email:hover {
+  background: #dd3c2f;
+}
+
+.share-btn.twitter {
+  background: #1da1f2;
+  color: white;
+}
+
+.share-btn.twitter:hover {
+  background: #1991db;
+}
+
+.share-btn.linkedin {
+  background: #0077b5;
+  color: white;
+}
+
+.share-btn.linkedin:hover {
+  background: #006396;
+}
+
+.share-btn.sms {
+  background: #10b981;
+  color: white;
+}
+
+.share-btn.sms:hover {
+  background: #059669;
+}
+
+.share-btn.qr-code {
+  background: #6b7280;
+  color: white;
+}
+
+.share-btn.qr-code:hover {
+  background: #5d6370;
+}
+
+/* QR Code Section */
+.qr-code-section {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border: 2px dashed #cbd5e1;
+}
+
+.qr-code-section h5 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.qr-code-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.qr-code {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 0.5rem;
+}
+
+.qr-code-container p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Instructions */
+.share-instructions {
+  background: #fffbeb;
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.share-instructions h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.share-instructions ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #78350f;
+}
+
+.share-instructions li {
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .meeting-share-overlay {
+    padding: 0.5rem;
+  }
+  
+  .meeting-share-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .meeting-share-content {
+    padding: 1.5rem;
+  }
+  
+  .credentials-group {
+    flex-direction: column;
+  }
+  
+  .credential-item {
+    min-width: unset;
+  }
+  
+  .share-buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .link-input-group {
+    flex-direction: column;
+  }
+  
+  .copy-btn {
+    align-self: flex-end;
+    width: fit-content;
+  }
+}
+
+/* Dark Theme Styles */
+[data-theme='dark'] .meeting-share-modal {
+  background: var(--background-secondary, #1e293b);
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme='dark'] .meeting-share-header {
+  background: linear-gradient(135deg, #1e40af, #1d4ed8);
+  border-bottom: 2px solid var(--border-dark, #334155);
+}
+
+[data-theme='dark'] .close-btn {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] .meeting-info-card,
+.dark-mode .meeting-info-card {
+  background: var(--bg-tertiary, #334155);
+  border: 1px solid var(--border-color, #475569);
+}
+
+[data-theme='dark'] .meeting-info-card h4,
+.dark-mode .meeting-info-card h4 {
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme='dark'] .detail-item label,
+.dark-mode .detail-item label {
+  color: var(--text-secondary, #cbd5e1);
+}
+
+[data-theme='dark'] .meeting-id,
+[data-theme='dark'] .password,
+.dark-mode .meeting-id,
+.dark-mode .password {
+  background: var(--input-bg, #0f172a);
+  color: var(--text-primary, #f1f5f9);
+  border: 1px solid var(--input-border, #475569);
+}
+
+[data-theme='dark'] .share-option label,
+.dark-mode .share-option label {
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme='dark'] .link-input,
+.dark-mode .link-input {
+  background: var(--input-bg, #0f172a);
+  color: var(--text-primary, #f1f5f9);
+  border: 2px solid var(--input-border, #475569);
+}
+
+[data-theme='dark'] .link-input:focus,
+.dark-mode .link-input:focus {
+  border-color: var(--input-focus, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+[data-theme='dark'] .credential-item,
+.dark-mode .credential-item {
+  background: var(--bg-tertiary, #334155);
+  border: 1px solid var(--border-color, #475569);
+}
+
+[data-theme='dark'] .credential-item span,
+.dark-mode .credential-item span {
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme='dark'] .share-actions h5,
+.dark-mode .share-actions h5 {
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme='dark'] .qr-code-section,
+.dark-mode .qr-code-section {
+  background: var(--bg-tertiary, #334155);
+  border: 2px dashed var(--border-color, #64748b);
+}
+
+[data-theme='dark'] .qr-code-section h5,
+.dark-mode .qr-code-section h5 {
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme='dark'] .qr-code,
+.dark-mode .qr-code {
+  background: white;
+}
+
+[data-theme='dark'] .qr-code-container p,
+.dark-mode .qr-code-container p {
+  color: var(--text-secondary, #94a3b8);
+}
+
+[data-theme='dark'] .share-instructions,
+.dark-mode .share-instructions {
+  background: var(--warning-bg, #451a03);
+  border: 1px solid var(--warning-border, #d97706);
+}
+
+[data-theme='dark'] .share-instructions h5,
+.dark-mode .share-instructions h5 {
+  color: var(--warning-text, #fdba74);
+}
+
+[data-theme='dark'] .share-instructions ol,
+.dark-mode .share-instructions ol {
+  color: var(--warning-text, #fed7aa);
+}
+
+/* Additional missing elements for share modal */
+[data-theme='dark'] .meeting-share-modal,
+.dark-mode .meeting-share-modal {
+  background: var(--bg-secondary, #1e293b);
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme='dark'] .meeting-share-header,
+.dark-mode .meeting-share-header {
+  background: var(--primary-gradient);
+  color: var(--text-inverse, #ffffff);
+}
+
+[data-theme='dark'] .meeting-share-header h3,
+.dark-mode .meeting-share-header h3 {
+  color: var(--text-inverse, #ffffff);
+}
+
+[data-theme='dark'] .close-btn,
+.dark-mode .close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-inverse, #ffffff);
+}
+
+[data-theme='dark'] .close-btn:hover,
+.dark-mode .close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Fix QR button visibility in dark theme */
+[data-theme='dark'] .share-btn.qr-code,
+.dark-mode .share-btn.qr-code {
+  background: var(--bg-tertiary, #334155);
+  color: var(--text-primary, #f1f5f9);
+  border: 1px solid var(--border-color, #475569);
+}
+
+[data-theme='dark'] .share-btn.qr-code:hover,
+.dark-mode .share-btn.qr-code:hover {
+  background: var(--primary-color, #3b82f6);
+  color: var(--text-inverse, #ffffff);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}

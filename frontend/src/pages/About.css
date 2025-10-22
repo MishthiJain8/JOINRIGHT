@@ -1,0 +1,509 @@
+.about-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-container {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 80px 0 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0 -20px 60px;
+  color: white;
+  border-radius: 0 0 30px 30px;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.content-section {
+  padding-bottom: 60px;
+}
+
+.section {
+  margin-bottom: 60px;
+}
+
+.section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.section p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #4b5563;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin: 60px 0;
+}
+
+.feature-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  border-color: #667eea;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 15px;
+}
+
+.feature-card p {
+  color: #6b7280;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.benefits-list {
+  display: grid;
+  gap: 25px;
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 25px;
+  background: #f8fafc;
+  border-radius: 15px;
+  border-left: 4px solid #10b981;
+}
+
+.benefit-icon {
+  font-size: 1.5rem;
+  color: #10b981;
+  margin-top: 5px;
+}
+
+.benefit-item h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 8px;
+}
+
+.benefit-item p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  text-align: left;
+}
+
+.cta-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 60px 40px;
+  border-radius: 25px;
+  text-align: center;
+  color: white;
+  margin-top: 80px;
+}
+
+.cta-section h2 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  color: rgba(255,255,255,0.9);
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.btn-primary:hover {
+  background: #059669;
+  border-color: #059669;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+
+.btn-secondary:hover {
+  background: white;
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
+/* Light theme hero section visibility fix only */
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+}
+
+.hero-section h1 {
+  color: white !important;
+}
+
+.hero-subtitle {
+  color: white !important;
+  opacity: 0.9;
+}
+
+/* Fix CTA section visibility in light theme */
+.cta-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+}
+
+.cta-section h2 {
+  color: white !important;
+}
+
+.cta-section p {
+  color: rgba(255,255,255,0.9) !important;
+}
+
+/* Light theme fix for buttons outside gradient sections */
+.about-container .btn-secondary {
+  background: transparent;
+  color: #667eea;
+  border-color: #667eea;
+}
+
+.about-container .btn-secondary:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  transform: translateY(-2px);
+}
+
+/* Ensure buttons in CTA section remain white */
+.cta-section .btn-secondary {
+  background: transparent !important;
+  color: white !important;
+  border-color: white !important;
+}
+
+.cta-section .btn-secondary:hover {
+  background: white !important;
+  color: #667eea !important;
+  transform: translateY(-2px);
+}
+
+.cta-section .btn-primary {
+  background: #10b981 !important;
+  color: white !important;
+  border-color: #10b981 !important;
+}
+
+.cta-section .btn-primary:hover {
+  background: #059669 !important;
+  border-color: #059669 !important;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 20px 40px;
+  }
+
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 30px 20px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+/* Dark Mode Theme Support */
+[data-theme='dark'] .about-page,
+.dark-mode .about-page {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .hero-section,
+.dark-mode .hero-section {
+  background: var(--primary-gradient);
+  color: var(--text-inverse);
+}
+
+[data-theme='dark'] .hero-section h1,
+.dark-mode .hero-section h1 {
+  color: var(--text-inverse);
+}
+
+[data-theme='dark'] .hero-subtitle,
+.dark-mode .hero-subtitle {
+  color: var(--text-inverse);
+}
+
+[data-theme='dark'] .section h2,
+.dark-mode .section h2 {
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .section p,
+.dark-mode .section p {
+  color: var(--text-secondary);
+}
+
+[data-theme='dark'] .feature-card,
+.dark-mode .feature-card {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .feature-card:hover,
+.dark-mode .feature-card:hover {
+  border-color: var(--primary-color);
+}
+
+[data-theme='dark'] .feature-card h3,
+.dark-mode .feature-card h3 {
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .feature-card p,
+.dark-mode .feature-card p {
+  color: var(--text-secondary);
+}
+
+[data-theme='dark'] .benefit-item,
+.dark-mode .benefit-item {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .benefit-item h4,
+.dark-mode .benefit-item h4 {
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .benefit-item p,
+.dark-mode .benefit-item p {
+  color: var(--text-secondary);
+}
+
+[data-theme='dark'] .cta-section,
+.dark-mode .cta-section {
+  background: var(--primary-gradient);
+  color: var(--text-inverse);
+}
+
+[data-theme='dark'] .cta-section h2,
+.dark-mode .cta-section h2 {
+  color: var(--text-inverse);
+}
+
+[data-theme='dark'] .cta-section p,
+.dark-mode .cta-section p {
+  color: var(--text-inverse);
+  opacity: 0.9;
+}
+
+/* Dark theme button fixes */
+[data-theme='dark'] .about-container .btn-secondary,
+.dark-mode .about-container .btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+[data-theme='dark'] .about-container .btn-secondary:hover,
+.dark-mode .about-container .btn-secondary:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+[data-theme='dark'] .about-container .btn-primary,
+.dark-mode .about-container .btn-primary {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+[data-theme='dark'] .about-container .btn-primary:hover,
+.dark-mode .about-container .btn-primary:hover {
+  background: #059669;
+  border-color: #059669;
+}
+
+/* Ensure CTA section buttons remain white on gradient in dark mode */
+[data-theme='dark'] .cta-section .btn-secondary,
+.dark-mode .cta-section .btn-secondary {
+  background: transparent;
+  color: var(--text-inverse);
+  border-color: var(--text-inverse);
+}
+
+[data-theme='dark'] .cta-section .btn-secondary:hover,
+.dark-mode .cta-section .btn-secondary:hover {
+  background: var(--text-inverse);
+  color: var(--primary-color);
+}
+
+/* Additional dark theme fixes for missed elements */
+[data-theme='dark'] .about-container,
+.dark-mode .about-container {
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .content-section,
+.dark-mode .content-section {
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .feature-icon,
+.dark-mode .feature-icon {
+  color: var(--primary-color);
+}
+
+[data-theme='dark'] .benefit-icon,
+.dark-mode .benefit-icon {
+  color: var(--success-color);
+}
+
+/* Force visibility overrides for dark theme */
+[data-theme='dark'] .about-page *,
+.dark-mode .about-page * {
+  color: inherit;
+}
+
+[data-theme='dark'] .about-page .section h2,
+.dark-mode .about-page .section h2 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme='dark'] .about-page .section p,
+.dark-mode .about-page .section p {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme='dark'] .about-page .feature-card h3,
+.dark-mode .about-page .feature-card h3 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme='dark'] .about-page .feature-card p,
+.dark-mode .about-page .feature-card p {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme='dark'] .about-page .benefit-item h4,
+.dark-mode .about-page .benefit-item h4 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme='dark'] .about-page .benefit-item p,
+.dark-mode .about-page .benefit-item p {
+  color: var(--text-secondary) !important;
+}
+
+@media (max-width: 480px) {
+  .about-container {
+    padding: 0 15px;
+  }
+
+  .section h2 {
+    font-size: 2rem;
+  }
+
+  .section p {
+    font-size: 1rem;
+  }
+
+  .cta-section {
+    padding: 40px 20px;
+    margin: 0 -15px;
+    border-radius: 15px;
+  }
+}

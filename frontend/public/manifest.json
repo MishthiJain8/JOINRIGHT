@@ -1,0 +1,66 @@
+{
+  "short_name": "JointRight",
+  "name": "JointRight - Video Conferencing Platform",
+  "description": "A modern video conferencing platform with advanced features for seamless remote collaboration",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["productivity", "business", "social"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Join Meeting",
+      "short_name": "Join",
+      "description": "Quickly join a meeting with ID",
+      "url": "/dashboard?action=join",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Create Meeting",
+      "short_name": "Create",
+      "description": "Create a new meeting",
+      "url": "/dashboard?action=create",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+jointright",
+      "url": "/join?meeting=%s"
+    }
+  ]
+}

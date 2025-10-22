@@ -1,0 +1,459 @@
+/* Host Award Modal Styles */
+
+.host-award-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.host-award-modal {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+  position: relative;
+  color: #111; /* ensure visible text */
+}
+
+.modal-header {
+  background: rgba(203, 186, 186, 0.95);
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px 16px 0 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.award-icon {
+  color: #f59e0b;
+  font-size: 24px;
+  animation: sparkle 2s infinite;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: #f3f4f6;
+  color: #181c23;
+}
+
+.modal-body {
+  padding: 24px;
+  background: white;
+  border-radius: 0 0 16px 16px;
+  color: #111; /* black text on white */
+}
+
+.participant-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff; /* white text on green gradient */
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.participant-avatar {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.participant-info h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.participant-info p {
+  margin: 4px 0 0;
+  opacity: 0.9;
+  font-size: 14px;
+  color: #fff;
+}
+
+.form-section {
+  margin-bottom: 24px;
+}
+
+.form-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+}
+
+.award-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.award-type-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  color: #111; /* black text */
+}
+
+.award-type-card:hover {
+  border-color: #10b981;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
+}
+
+.award-type-card.selected {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #151817, #090b0a);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);
+  color: #fff; /* white text on dark */
+}
+
+.award-icon-container {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+}
+
+.award-info h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
+.award-info p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.award-type-card.selected .award-info h4,
+.award-type-card.selected .award-info p {
+  color: #fff; /* ensure text visible on dark */
+}
+
+.default-points {
+  display: inline-block;
+  background: #10b981;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.form-section textarea {
+  width: 100%;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  resize: vertical;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  color: #111;
+}
+
+.form-section textarea:focus {
+  outline: none;
+  border-color: #10b981;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.form-field label {
+  margin-bottom: 6px;
+}
+
+.points-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.points-input-container input {
+  width: 80px;
+  border: 2px solid #111317;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+  text-align: center;
+  transition: border-color 0.2s;
+  color: #111;
+}
+
+.points-input-container input:focus {
+  outline: none;
+  border-color: #10b981;
+}
+
+.points-label {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.form-field small {
+  display: block;
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.impact-preview {
+  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+  border: 2px solid #10b981;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+  color: #111;
+}
+
+.impact-preview h4 {
+  margin: 0 0 12px;
+  color: #065f46;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.impact-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.score-change {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: #111;
+}
+
+.current-score {
+  color: #6b7280;
+}
+
+.arrow {
+  color: #10b981;
+  font-size: 18px;
+}
+
+.new-score.positive {
+  color: #10b981;
+  font-size: 18px;
+}
+
+.points-award {
+  background: #10b981;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.award-benefits {
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  color: #111;
+}
+
+.award-benefits p {
+  margin: 0;
+  font-size: 14px;
+  color: #065f46;
+  font-weight: 500;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-secondary {
+  padding: 12px 24px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  color: #6b7280;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: #d1d5db;
+  background: #f9fafb;
+}
+
+.btn-success {
+  padding: 12px 24px;
+  border: none;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-success:disabled,
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .host-award-modal {
+    width: 95%;
+    margin: 10px;
+  }
+  
+  .award-types-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+  
+  .modal-footer button {
+    width: 100%;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .modal-header {
+    background: rgba(31, 41, 55, 0.95);
+    border-bottom-color: #374151;
+  }
+  
+  .modal-header h2 {
+    color: #f9fafb;
+  }
+  
+  .modal-body {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+  
+  .form-section label {
+    color: #e5e7eb;
+  }
+  
+  .award-type-card {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .award-info h4 {
+    color: #f9fafb;
+  }
+
+  .award-info p {
+    color: #d1d5db;
+  }
+}

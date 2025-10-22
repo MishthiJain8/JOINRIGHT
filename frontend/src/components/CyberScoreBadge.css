@@ -1,0 +1,320 @@
+/* Cyber Score Badge Styles */
+.cyber-score-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  position: relative;
+}
+
+.score-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.cyber-score-badge:hover .score-container {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.score-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid;
+  transition: all 0.2s ease;
+}
+
+.score-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.score-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.score-main {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.score-number {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.score-max {
+  font-size: 11px;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+.score-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reputation-level {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.meeting-count {
+  font-size: 10px;
+  color: #64748B;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.score-bar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: 8px;
+  min-width: 60px;
+}
+
+.score-bar-background {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  background: linear-gradient(90deg, currentColor 0%, rgba(255, 255, 255, 0.2) 100%);
+}
+
+.score-percentage {
+  font-size: 10px;
+  color: #94A3B8;
+  text-align: center;
+  font-weight: 600;
+}
+
+.restriction-warning {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 2px 6px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  animation: restrictionPulse 2s ease-in-out infinite;
+}
+
+@keyframes restrictionPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.restriction-icon {
+  font-size: 10px;
+}
+
+.restriction-text {
+  font-size: 9px;
+  color: #EF4444;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Size variations */
+.cyber-score-badge.mini .score-container {
+  padding: 3px 6px;
+  gap: 4px;
+}
+
+.cyber-score-badge.mini .score-icon-wrapper {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.cyber-score-badge.mini .score-icon {
+  font-size: 10px;
+}
+
+.cyber-score-badge.mini .score-number {
+  font-size: 12px;
+}
+
+.cyber-score-badge.small .score-icon-wrapper {
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+}
+
+.cyber-score-badge.medium .score-container {
+  padding: 8px 12px;
+  gap: 10px;
+}
+
+.cyber-score-badge.medium .score-icon-wrapper {
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+}
+
+.cyber-score-badge.medium .score-icon {
+  font-size: 16px;
+}
+
+.cyber-score-badge.medium .score-number {
+  font-size: 18px;
+}
+
+.cyber-score-badge.medium .reputation-level {
+  font-size: 12px;
+}
+
+.cyber-score-badge.large .score-container {
+  padding: 12px 16px;
+  gap: 12px;
+  border-radius: 16px;
+}
+
+.cyber-score-badge.large .score-icon-wrapper {
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.cyber-score-badge.large .score-icon {
+  font-size: 18px;
+}
+
+.cyber-score-badge.large .score-number {
+  font-size: 24px;
+}
+
+.cyber-score-badge.large .score-max {
+  font-size: 14px;
+}
+
+.cyber-score-badge.large .reputation-level {
+  font-size: 13px;
+}
+
+.cyber-score-badge.large .meeting-count {
+  font-size: 11px;
+}
+
+/* Reputation-specific styles */
+.cyber-score-badge.excellent {
+  --badge-glow: rgba(16, 185, 129, 0.3);
+}
+
+.cyber-score-badge.good {
+  --badge-glow: rgba(5, 150, 105, 0.3);
+}
+
+.cyber-score-badge.average {
+  --badge-glow: rgba(245, 158, 11, 0.3);
+}
+
+.cyber-score-badge.poor {
+  --badge-glow: rgba(239, 68, 68, 0.3);
+}
+
+.cyber-score-badge.banned {
+  --badge-glow: rgba(127, 29, 29, 0.3);
+}
+
+.cyber-score-badge.excellent:hover .score-container,
+.cyber-score-badge.good:hover .score-container {
+  box-shadow: 0 4px 20px var(--badge-glow);
+}
+
+.cyber-score-badge.average:hover .score-container,
+.cyber-score-badge.poor:hover .score-container,
+.cyber-score-badge.banned:hover .score-container {
+  box-shadow: 0 4px 20px var(--badge-glow);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Animation for new scores */
+@keyframes scoreUpdate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cyber-score-badge.updating .score-number {
+  animation: scoreUpdate 0.6s ease-in-out;
+}
+
+/* Tooltip styles for hover info */
+.cyber-score-badge[title]:hover::before {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 8px;
+}
+
+.cyber-score-badge[title]:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  margin-bottom: 3px;
+  z-index: 1000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cyber-score-badge.large {
+    transform: scale(0.9);
+  }
+  
+  .cyber-score-badge.medium {
+    transform: scale(0.95);
+  }
+  
+  .score-bar-container {
+    min-width: 50px;
+  }
+}

@@ -1,0 +1,456 @@
+/* Root Variables for Theme Support */
+:root {
+  /* Brand Colors */
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #4CAF50;
+  --warning-color: #FF9800;
+  --error-color: #f44336;
+  --success-color: #4CAF50;
+  
+  /* Light Mode Colors */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+  --border-color: #e2e8f0;
+  --border-light: #f1f5f9;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-heavy: 0 20px 25px rgba(0, 0, 0, 0.1);
+  
+  /* Glass Effect Variables */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  /* Input and Form Colors */
+  --input-bg: #ffffff;
+  --input-border: #e2e8f0;
+  --input-focus: #667eea;
+  --placeholder-color: #94a3b8;
+  
+  /* Status Colors */
+  --warning-bg: #fffbeb;
+  --warning-text: #92400e;
+  --warning-border: #fbbf24;
+  --error-bg: #fef2f2;
+  --error-text: #991b1b;
+  --error-border: #f87171;
+  --success-bg: #f0fdf4;
+  --success-text: #166534;
+  --success-border: #4ade80;
+}
+
+/* Dark Mode Variables */
+[data-theme='dark'],
+.dark-mode {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #1e293b;
+  --border-color: #334155;
+  --border-light: #475569;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-heavy: 0 20px 25px rgba(0, 0, 0, 0.4);
+  
+  --glass-bg: rgba(30, 41, 59, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  --input-bg: #334155;
+  --input-border: #475569;
+  --input-focus: #667eea;
+  --placeholder-color: #94a3b8;
+  
+  --warning-bg: #451a03;
+  --warning-text: #fdba74;
+  --warning-border: #d97706;
+  --error-bg: #450a0a;
+  --error-text: #fca5a5;
+  --error-border: #ef4444;
+  --success-bg: #052e16;
+  --success-text: #86efac;
+  --success-border: #22c55e;
+}
+
+/* Universal Text Visibility Rules */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Universal element styling for theme compatibility */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+}
+
+p, span, div, li, td, th {
+  color: inherit;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+/* Form elements */
+input, textarea, select {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-primary);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--placeholder-color);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--input-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Button text visibility */
+button {
+  color: inherit;
+}
+
+/* Ensure all text elements inherit proper colors */
+* {
+  color: inherit;
+}
+
+/* Override for elements that need specific colors */
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-inverse {
+  color: var(--text-inverse) !important;
+}
+
+.bg-primary {
+  background-color: var(--bg-primary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary) !important;
+}
+
+.bg-tertiary {
+  background-color: var(--bg-tertiary) !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Universal Dark Mode Text Visibility Rules */
+/* These rules ensure no text becomes invisible in either theme */
+
+/* Force all text elements to have proper visibility in dark mode */
+[data-theme='dark'],
+[data-theme='dark'] *,
+.dark-mode,
+.dark-mode * {
+  color: inherit;
+}
+
+/* Universal headings */
+[data-theme='dark'] h1,
+[data-theme='dark'] h2,
+[data-theme='dark'] h3,
+[data-theme='dark'] h4,
+[data-theme='dark'] h5,
+[data-theme='dark'] h6,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+  color: var(--text-primary) !important;
+}
+
+/* Universal paragraphs and text */
+[data-theme='dark'] p,
+[data-theme='dark'] span,
+[data-theme='dark'] div,
+[data-theme='dark'] li,
+[data-theme='dark'] td,
+[data-theme='dark'] th,
+[data-theme='dark'] label,
+.dark-mode p,
+.dark-mode span,
+.dark-mode div,
+.dark-mode li,
+.dark-mode td,
+.dark-mode th,
+.dark-mode label {
+  color: var(--text-primary);
+}
+
+/* Universal form elements */
+[data-theme='dark'] input,
+[data-theme='dark'] textarea,
+[data-theme='dark'] select,
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+  background-color: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme='dark'] input::placeholder,
+[data-theme='dark'] textarea::placeholder,
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+  color: var(--placeholder-color) !important;
+  opacity: 1;
+}
+
+/* Universal links */
+[data-theme='dark'] a,
+.dark-mode a {
+  color: var(--primary-color);
+}
+
+[data-theme='dark'] a:hover,
+.dark-mode a:hover {
+  color: var(--secondary-color);
+}
+
+/* Universal buttons */
+[data-theme='dark'] button,
+.dark-mode button {
+  color: inherit;
+}
+
+/* Cards, modals, and containers */
+[data-theme='dark'] .card,
+[data-theme='dark'] .modal,
+[data-theme='dark'] .container,
+[data-theme='dark'] .content,
+.dark-mode .card,
+.dark-mode .modal,
+.dark-mode .container,
+.dark-mode .content {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Sidebar and navigation */
+[data-theme='dark'] .sidebar,
+[data-theme='dark'] .nav,
+[data-theme='dark'] .navbar,
+[data-theme='dark'] .menu,
+.dark-mode .sidebar,
+.dark-mode .nav,
+.dark-mode .navbar,
+.dark-mode .menu {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Tables */
+[data-theme='dark'] table,
+.dark-mode table {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] table th,
+[data-theme='dark'] table td,
+.dark-mode table th,
+.dark-mode table td {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Lists */
+[data-theme='dark'] ul,
+[data-theme='dark'] ol,
+.dark-mode ul,
+.dark-mode ol {
+  color: var(--text-primary);
+}
+
+/* Borders and separators */
+[data-theme='dark'] hr,
+[data-theme='dark'] .border,
+[data-theme='dark'] .separator,
+.dark-mode hr,
+.dark-mode .border,
+.dark-mode .separator {
+  border-color: var(--border-color);
+}
+
+/* Override any hardcoded dark colors that might be invisible */
+[data-theme='dark'] *[style*='color: #000'],
+[data-theme='dark'] *[style*='color: black'],
+[data-theme='dark'] *[style*='color: #333'],
+[data-theme='dark'] *[style*='color: #666'],
+.dark-mode *[style*='color: #000'],
+.dark-mode *[style*='color: black'],
+.dark-mode *[style*='color: #333'],
+.dark-mode *[style*='color: #666'] {
+  color: var(--text-primary) !important;
+}
+
+/* Override any hardcoded light backgrounds that might make text invisible */
+[data-theme='dark'] *[style*='background: white'],
+[data-theme='dark'] *[style*='background: #fff'],
+[data-theme='dark'] *[style*='background-color: white'],
+[data-theme='dark'] *[style*='background-color: #fff'],
+.dark-mode *[style*='background: white'],
+.dark-mode *[style*='background: #fff'],
+.dark-mode *[style*='background-color: white'],
+.dark-mode *[style*='background-color: #fff'] {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* Ensure text remains visible on any background */
+[data-theme='dark'] .text-dark,
+[data-theme='dark'] .text-black,
+.dark-mode .text-dark,
+.dark-mode .text-black {
+  color: var(--text-primary) !important;
+}
+
+/* Emergency visibility override */
+[data-theme='dark'] .invisible-text,
+[data-theme='dark'] .hidden-text,
+.dark-mode .invisible-text,
+.dark-mode .hidden-text {
+  color: var(--text-primary) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure icons remain visible */
+[data-theme='dark'] .icon,
+[data-theme='dark'] svg,
+[data-theme='dark'] i,
+.dark-mode .icon,
+.dark-mode svg,
+.dark-mode i {
+  color: inherit;
+}
+
+/* Specific fixes for common class names */
+[data-theme='dark'] .text,
+[data-theme='dark'] .content-text,
+[data-theme='dark'] .description,
+[data-theme='dark'] .subtitle,
+[data-theme='dark'] .caption,
+.dark-mode .text,
+.dark-mode .content-text,
+.dark-mode .description,
+.dark-mode .subtitle,
+.dark-mode .caption {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme='dark'] .title,
+[data-theme='dark'] .heading,
+[data-theme='dark'] .header,
+.dark-mode .title,
+.dark-mode .heading,
+.dark-mode .header {
+  color: var(--text-primary) !important;
+}
+
+/* Login and Signup Page Override - Force Light Theme */
+.login-page-override,
+.login-page-override *,
+html.login-page-override,
+html.login-page-override * {
+  /* Force light theme variables */
+  --bg-primary: #f8fafc !important;
+  --bg-secondary: #ffffff !important;
+  --bg-tertiary: #f1f5f9 !important;
+  --text-primary: #1e293b !important;
+  --text-secondary: #64748b !important;
+  --text-muted: #94a3b8 !important;
+  --text-inverse: #ffffff !important;
+  --border-color: #e2e8f0 !important;
+  --border-light: #f1f5f9 !important;
+  
+  --input-bg: #ffffff !important;
+  --input-border: #e2e8f0 !important;
+  --input-focus: #667eea !important;
+  --placeholder-color: #94a3b8 !important;
+}
+
+/* Force light theme background and text for login/signup pages */
+body.login-page-override,
+html.login-page-override body {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+/* Remove dark mode attributes when login page override is active */
+html.login-page-override[data-theme='dark'],
+html.login-page-override.dark-mode,
+body.login-page-override[data-theme='dark'],
+body.login-page-override.dark-mode {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+/* Force all child elements to use light theme when override is active */
+.login-page-override *,
+html.login-page-override *,
+body.login-page-override * {
+  color: inherit !important;
+}
+
+/* Override any global dark mode text colors on login pages */
+.login-page-override h1,
+.login-page-override h2,
+.login-page-override h3,
+.login-page-override h4,
+.login-page-override h5,
+.login-page-override h6,
+.login-page-override p,
+.login-page-override span,
+.login-page-override div,
+.login-page-override label {
+  color: inherit !important;
+}
