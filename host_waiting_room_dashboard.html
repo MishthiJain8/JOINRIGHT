@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JointRight - Host Waiting Room Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meeting-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e40af;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .waiting-participants {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .participant-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s ease;
+        }
+        
+        .participant-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .participant-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .participant-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .participant-details {
+            flex-grow: 1;
+        }
+        
+        .participant-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .participant-email {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+        
+        .participant-waiting {
+            color: #059669;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .participant-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .btn-admit {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-admit:hover {
+            background: #059669;
+        }
+        
+        .btn-deny {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-deny:hover {
+            background: #dc2626;
+        }
+        
+        .btn-message {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .btn-message:hover {
+            background: #4f46e5;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .empty-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #d1d5db;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: #10b981;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(24px);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: #10b981;
+        }
+        
+        .notification.error {
+            background: #ef4444;
+        }
+        
+        .notification.info {
+            background: #3b82f6;
+        }
+        
+        @media (max-width: 768px) {
+            .participant-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .participant-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>🏢 Host Waiting Room Dashboard</h1>
+            <div class="meeting-info">
+                <div class="info-item">
+                    <div class="info-label">Meeting ID</div>
+                    <div class="info-value" id="meetingId">QNM-448-FZA</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Meeting Status</div>
+                    <div class="info-value">
+                        <span class="status-badge status-active" id="meetingStatus">
+                            🟢 Active
+                        </span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Participants in Room</div>
+                    <div class="info-value" id="participantCount">1</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Waiting Room Controls -->
+            <div class="section">
+                <h2 class="section-title">⚙️ Waiting Room Controls</h2>
+                <div class="controls">
+                    <div class="control-item">
+                        <span>Enable Waiting Room</span>
+                        <div class="toggle-switch active" id="waitingRoomToggle">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <button class="btn btn-message" onclick="broadcastToWaitingRoom()">
+                            📢 Message All Waiting
+                        </button>
+                    </div>
+                    <div class="control-item">
+                        <button class="btn btn-admit" onclick="admitAllWaiting()">
+                            ✅ Admit All
+                        </button>
+                    </div>
+                    <div class="control-item">
+                        <button class="btn" onclick="refreshWaitingRoom()" style="background: #8b5cf6; color: white;">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Waiting Participants -->
+            <div class="section">
+                <h2 class="section-title">
+                    👥 Waiting Participants 
+                    <span class="status-badge status-active" id="waitingCount">0 waiting</span>
+                </h2>
+                
+                <div class="waiting-participants" id="waitingParticipants">
+                    <!-- Participants will be populated here -->
+                </div>
+                
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">🏃‍♂️</div>
+                    <div class="empty-title">No one is waiting</div>
+                    <div>Participants will appear here when they request to join</div>
+                </div>
+            </div>
+            
+            <!-- Test Section -->
+            <div class="section">
+                <h2 class="section-title">🧪 Test Waiting Room</h2>
+                <div class="controls">
+                    <div class="control-item">
+                        <button class="btn" onclick="simulateParticipantJoin()" style="background: #f59e0b; color: white;">
+                            👤 Simulate Join Request
+                        </button>
+                    </div>
+                    <div class="control-item">
+                        <button class="btn" onclick="testAPI()" style="background: #6366f1; color: white;">
+                            🔧 Test API
+                        </button>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 10px; border-left: 4px solid #3b82f6;">
+                    <strong>Instructions:</strong>
+                    <ol style="margin-top: 10px; padding-left: 20px;">
+                        <li>Have participants go to: <code>http://localhost:3000/join</code></li>
+                        <li>Enter Meeting ID: <strong id="testMeetingId">QNM-448-FZA</strong></li>
+                        <li>Enter Password: <strong>demo123</strong></li>
+                        <li>Non-host users will be placed in waiting room</li>
+                        <li>Use this dashboard to admit or deny participants</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification area -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Mock data for testing
+        let waitingParticipants = [];
+        let isWaitingRoomEnabled = true;
+        
+        // Initialize dashboard
+        function initDashboard() {
+            updateWaitingParticipantsDisplay();
+            updateWaitingCount();
+        }
+        
+        // Update waiting participants display
+        function updateWaitingParticipantsDisplay() {
+            const container = document.getElementById('waitingParticipants');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (waitingParticipants.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+            } else {
+                container.style.display = 'grid';
+                emptyState.style.display = 'none';
+                
+                container.innerHTML = waitingParticipants.map(participant => `
+                    <div class="participant-card">
+                        <div class="participant-info">
+                            <div class="participant-avatar">
+                                ${participant.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div class="participant-details">
+                                <div class="participant-name">${participant.name}</div>
+                                <div class="participant-email">${participant.email}</div>
+                                <div class="participant-waiting">
+                                    🕐 Waiting for ${getWaitingTime(participant.joinedAt)}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="participant-actions">
+                            <button class="btn btn-admit" onclick="admitParticipant('${participant.id}')">
+                                ✅ Admit
+                            </button>
+                            <button class="btn btn-deny" onclick="denyParticipant('${participant.id}')">
+                                ❌ Deny
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        // Calculate waiting time
+        function getWaitingTime(joinedAt) {
+            const minutes = Math.floor((Date.now() - joinedAt) / 60000);
+            if (minutes < 1) return 'just now';
+            if (minutes === 1) return '1 minute';
+            return `${minutes} minutes`;
+        }
+        
+        // Update waiting count
+        function updateWaitingCount() {
+            const count = waitingParticipants.length;
+            document.getElementById('waitingCount').textContent = `${count} waiting`;
+            document.getElementById('waitingCount').className = 
+                count > 0 ? 'status-badge status-active' : 'status-badge status-inactive';
+        }
+        
+        // Admit participant
+        async function admitParticipant(participantId) {
+            const participant = waitingParticipants.find(p => p.id === participantId);
+            if (!participant) return;
+            
+            try {
+                // Call API to admit participant
+                const response = await fetch('http://localhost:5000/api/waiting-room/admit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        roomId: document.getElementById('meetingId').textContent,
+                        userId: participantId,
+                        hostId: 'host-id'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Remove from waiting list
+                    waitingParticipants = waitingParticipants.filter(p => p.id !== participantId);
+                    updateWaitingParticipantsDisplay();
+                    updateWaitingCount();
+                    showNotification(`✅ ${participant.name} admitted to meeting`, 'success');
+                } else {
+                    showNotification(`❌ Failed to admit ${participant.name}: ${result.message}`, 'error');
+                }
+            } catch (error) {
+                showNotification(`❌ Error admitting ${participant.name}`, 'error');
+                console.error('Admit error:', error);
+            }
+        }
+        
+        // Deny participant
+        function denyParticipant(participantId) {
+            const participant = waitingParticipants.find(p => p.id === participantId);
+            if (!participant) return;
+            
+            const reason = prompt(`Why are you denying ${participant.name}? (Optional)`);
+            
+            // Remove from waiting list
+            waitingParticipants = waitingParticipants.filter(p => p.id !== participantId);
+            updateWaitingParticipantsDisplay();
+            updateWaitingCount();
+            
+            showNotification(`❌ ${participant.name} denied access${reason ? ': ' + reason : ''}`, 'info');
+        }
+        
+        // Admit all waiting participants
+        function admitAllWaiting() {
+            if (waitingParticipants.length === 0) {
+                showNotification('No participants waiting', 'info');
+                return;
+            }
+            
+            const count = waitingParticipants.length;
+            waitingParticipants = [];
+            updateWaitingParticipantsDisplay();
+            updateWaitingCount();
+            
+            showNotification(`✅ Admitted all ${count} waiting participants`, 'success');
+        }
+        
+        // Broadcast message to waiting room
+        function broadcastToWaitingRoom() {
+            const message = prompt('Message to send to all waiting participants:');
+            if (!message) return;
+            
+            showNotification(`📢 Message sent: "${message}"`, 'info');
+        }
+        
+        // Toggle waiting room
+        document.getElementById('waitingRoomToggle').addEventListener('click', function() {
+            isWaitingRoomEnabled = !isWaitingRoomEnabled;
+            this.classList.toggle('active');
+            
+            const status = isWaitingRoomEnabled ? 'enabled' : 'disabled';
+            showNotification(`Waiting room ${status}`, isWaitingRoomEnabled ? 'success' : 'info');
+        });
+        
+        // Simulate participant join (for testing)
+        function simulateParticipantJoin() {
+            const names = ['Alice Johnson', 'Bob Smith', 'Carol Davis', 'David Wilson', 'Eva Brown'];
+            const domains = ['example.com', 'test.com', 'demo.org'];
+            
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const randomEmail = `${randomName.toLowerCase().replace(' ', '.')}@${domains[Math.floor(Math.random() * domains.length)]}`;
+            
+            const participant = {
+                id: Date.now().toString(),
+                name: randomName,
+                email: randomEmail,
+                joinedAt: Date.now()
+            };
+            
+            waitingParticipants.push(participant);
+            updateWaitingParticipantsDisplay();
+            updateWaitingCount();
+            
+            showNotification(`👤 ${randomName} joined waiting room`, 'info');
+        }
+        
+        // Refresh waiting room
+        async function refreshWaitingRoom() {
+            try {
+                const meetingId = document.getElementById('meetingId').textContent;
+                const response = await fetch(`http://localhost:5000/api/waiting-room/${meetingId}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Update based on actual API data
+                    console.log('Waiting room data:', result.waitingRoom);
+                    showNotification('🔄 Refreshed waiting room data', 'success');
+                } else {
+                    showNotification('❌ Failed to refresh waiting room', 'error');
+                }
+            } catch (error) {
+                showNotification('❌ Connection error', 'error');
+                console.error('Refresh error:', error);
+            }
+        }
+        
+        // Test API connection
+        async function testAPI() {
+            try {
+                const response = await fetch('http://localhost:5000/api/health');
+                const result = await response.json();
+                
+                if (result.status === 'OK') {
+                    showNotification('✅ Backend connection successful', 'success');
+                } else {
+                    showNotification('⚠️ Backend connection issues', 'error');
+                }
+            } catch (error) {
+                showNotification('❌ Cannot connect to backend', 'error');
+                console.error('API test error:', error);
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Initialize dashboard on load
+        initDashboard();
+        
+        // Auto-refresh every 10 seconds
+        setInterval(() => {
+            updateWaitingParticipantsDisplay();
+        }, 10000);
+    </script>
+</body>
+</html>

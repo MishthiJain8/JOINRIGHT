@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting ID Format Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .demo-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .help-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .example-ids {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .example-id {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin: 5px;
+            display: inline-block;
+            font-weight: bold;
+            color: #495057;
+        }
+        .demo-note {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🎯 Meeting ID Format Demo</h1>
+        
+        <div class="demo-note">
+            <strong>✅ New Format Implemented!</strong><br>
+            Meeting IDs now use the format: <strong>ABC-123-DEF</strong><br>
+            Try typing in the input below to see auto-formatting in action!
+        </div>
+
+        <div class="form-group">
+            <label for="meetingId">Meeting ID *</label>
+            <input 
+                type="text" 
+                id="meetingId" 
+                placeholder="Enter Meeting ID (e.g., ABC-123-DEF)"
+                maxlength="11"
+            />
+            <div class="help-text">
+                • Type letters and numbers - hyphens will be added automatically<br>
+                • Format: 3 letters - 3 numbers - 3 letters<br>
+                • Maximum length: 11 characters (ABC-123-DEF)
+            </div>
+        </div>
+
+        <div class="example-ids">
+            <h3>📝 Example Meeting IDs from Tests:</h3>
+            <span class="example-id">TDW-744-BDM</span>
+            <span class="example-id">RWB-212-AMI</span>
+            <span class="example-id">JNH-284-AMJ</span>
+        </div>
+
+        <div class="example-ids">
+            <h3>✨ Try typing these to test formatting:</h3>
+            <div style="margin: 10px 0;">
+                • Type: <code>ABC123DEF</code> → Auto-formats to: <code>ABC-123-DEF</code><br>
+                • Type: <code>XYZ789PQR</code> → Auto-formats to: <code>XYZ-789-PQR</code><br>
+                • Type: <code>DEF456GHI</code> → Auto-formats to: <code>DEF-456-GHI</code>
+            </div>
+        </div>
+
+        <div class="demo-note">
+            <strong>🎉 Backend & Frontend Integration Complete!</strong><br>
+            ✅ Backend generates: ABC-123-DEF format<br>
+            ✅ Frontend auto-formats user input<br>
+            ✅ All API endpoints working correctly
+        </div>
+    </div>
+
+    <script>
+        // Frontend meeting ID input formatting (same as in JoinMeeting.js)
+        document.getElementById('meetingId').addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase();
+            
+            // Remove any characters that aren't letters, numbers, or hyphens
+            value = value.replace(/[^A-Z0-9-]/g, '');
+            
+            // Auto-format the meeting ID as user types (ABC-123-DEF)
+            if (value.length <= 11) { // Max length for ABC-123-DEF format
+                // Remove existing hyphens for processing
+                const cleanValue = value.replace(/-/g, '');
+                
+                // Format as ABC-123-DEF
+                let formattedValue = '';
+                if (cleanValue.length > 0) {
+                    formattedValue = cleanValue.substring(0, 3);
+                    if (cleanValue.length > 3) {
+                        formattedValue += '-' + cleanValue.substring(3, 6);
+                        if (cleanValue.length > 6) {
+                            formattedValue += '-' + cleanValue.substring(6, 9);
+                        }
+                    }
+                }
+                
+                e.target.value = formattedValue;
+            }
+        });
+
+        // Demo functionality - highlight input on focus
+        document.getElementById('meetingId').addEventListener('focus', function(e) {
+            e.target.style.background = '#fff3cd';
+        });
+
+        document.getElementById('meetingId').addEventListener('blur', function(e) {
+            e.target.style.background = 'white';
+        });
+    </script>
+</body>
+</html>

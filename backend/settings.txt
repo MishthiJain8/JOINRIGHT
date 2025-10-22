@@ -1,0 +1,4 @@
+root: C:\Users\UDB\AppData\Local\nvm
+path: C:\Users\UDB\AppData\Local\nodejs
+arch: 64
+proxy: none

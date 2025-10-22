@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberScore Admin API Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .auth-section {
+            border: 2px solid #e3f2fd;
+            background: #f8f9ff;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            padding: 16px;
+            margin: 10px 0;
+            border-radius: 6px;
+        }
+        input, button {
+            padding: 8px 12px;
+            margin: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background: #005a87;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-success { background: #28a745; }
+        .status-warning { background: #ffc107; }
+        .status-error { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ CyberScore Admin API Test</h1>
+        <p>Test the cyber score admin endpoints after authentication</p>
+    </div>
+
+    <div class="container auth-section">
+        <h2>🔐 Authentication</h2>
+        <p>First, you need to get an admin token. Either:</p>
+        <ol>
+            <li>Log into the admin dashboard in another tab</li>
+            <li>Open browser dev tools → Application → Local Storage</li>
+            <li>Copy the 'authToken' value and paste it below</li>
+        </ol>
+        <input type="text" id="authToken" placeholder="Paste your auth token here..." style="width: 400px;">
+        <button onclick="saveToken()">Save Token</button>
+        <div id="tokenStatus"></div>
+    </div>
+
+    <div class="container">
+        <h2>📊 API Tests</h2>
+        <button onclick="runAllTests()" style="background: #28a745; font-size: 16px; padding: 12px 20px;">🚀 Run All Tests</button>
+        
+        <div class="test-section">
+            <h3><span class="status-indicator" id="status-health"></span>Admin Health Check</h3>
+            <button onclick="testEndpoint('/api/admin/health', 'health')">Test Health</button>
+            <div id="result-health" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3><span class="status-indicator" id="status-bulk"></span>Bulk User Cyber Scores</h3>
+            <button onclick="testEndpoint('/api/admin/cyber-scores/bulk?limit=10', 'bulk')">Test Bulk Scores</button>
+            <div id="result-bulk" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3><span class="status-indicator" id="status-reviews"></span>Cyber Score Reviews</h3>
+            <button onclick="testEndpoint('/api/admin/cyber-scores/reviews?page=1&limit=5', 'reviews')">Test Reviews</button>
+            <div id="result-reviews" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3><span class="status-indicator" id="status-users"></span>Users List</h3>
+            <button onclick="testEndpoint('/api/admin/users?limit=5', 'users')">Test Users</button>
+            <div id="result-users" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>📋 Summary</h2>
+        <div id="summary"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+        let authToken = localStorage.getItem('testAuthToken') || '';
+        
+        // Load token on page load
+        if (authToken) {
+            document.getElementById('authToken').value = authToken;
+            updateTokenStatus();
+        }
+
+        function saveToken() {
+            authToken = document.getElementById('authToken').value.trim();
+            localStorage.setItem('testAuthToken', authToken);
+            updateTokenStatus();
+        }
+
+        function updateTokenStatus() {
+            const statusEl = document.getElementById('tokenStatus');
+            if (authToken) {
+                statusEl.innerHTML = '<div class="success">✅ Token saved (length: ' + authToken.length + ')</div>';
+            } else {
+                statusEl.innerHTML = '<div class="error">❌ No token provided</div>';
+            }
+        }
+
+        async function testEndpoint(endpoint, testId) {
+            const statusEl = document.getElementById('status-' + testId);
+            const resultEl = document.getElementById('result-' + testId);
+            
+            if (!authToken) {
+                statusEl.className = 'status-indicator status-error';
+                resultEl.textContent = 'Error: No auth token provided';
+                resultEl.style.display = 'block';
+                return;
+            }
+
+            statusEl.className = 'status-indicator status-warning';
+            resultEl.textContent = 'Testing...';
+            resultEl.style.display = 'block';
+
+            const startTime = performance.now();
+
+            try {
+                const response = await fetch(API_BASE + endpoint, {
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const duration = Math.round(performance.now() - startTime);
+                
+                let result = {
+                    status: response.status,
+                    statusText: response.statusText,
+                    duration: duration + 'ms',
+                    success: response.ok
+                };
+
+                if (response.ok) {
+                    const data = await response.json();
+                    result.data = data;
+                    statusEl.className = 'status-indicator status-success';
+                } else {
+                    try {
+                        const errorData = await response.json();
+                        result.error = errorData;
+                    } catch {
+                        result.error = 'Failed to parse error response';
+                    }
+                    statusEl.className = 'status-indicator status-error';
+                }
+
+                resultEl.textContent = JSON.stringify(result, null, 2);
+
+            } catch (error) {
+                statusEl.className = 'status-indicator status-error';
+                resultEl.textContent = 'Network Error: ' + error.message;
+            }
+        }
+
+        async function runAllTests() {
+            const tests = ['health', 'bulk', 'reviews', 'users'];
+            const endpoints = [
+                '/api/admin/health',
+                '/api/admin/cyber-scores/bulk?limit=10',
+                '/api/admin/cyber-scores/reviews?page=1&limit=5',
+                '/api/admin/users?limit=5'
+            ];
+
+            for (let i = 0; i < tests.length; i++) {
+                await testEndpoint(endpoints[i], tests[i]);
+                await new Promise(resolve => setTimeout(resolve, 200)); // Small delay
+            }
+
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const indicators = document.querySelectorAll('.status-indicator');
+            let success = 0, errors = 0, warnings = 0;
+
+            indicators.forEach(indicator => {
+                if (indicator.classList.contains('status-success')) success++;
+                else if (indicator.classList.contains('status-error')) errors++;
+                else if (indicator.classList.contains('status-warning')) warnings++;
+            });
+
+            const summaryEl = document.getElementById('summary');
+            summaryEl.innerHTML = `
+                <div style="display: flex; gap: 20px; margin: 16px 0;">
+                    <div class="success" style="display: inline-block;">✅ Success: ${success}</div>
+                    <div class="error" style="display: inline-block;">❌ Errors: ${errors}</div>
+                    <div style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 4px; display: inline-block;">⚠️ Pending: ${warnings}</div>
+                </div>
+                <p><strong>Next Steps:</strong></p>
+                <ul>
+                    <li>If all tests pass: CyberScore API is working correctly</li>
+                    <li>If you get 401 errors: Get a fresh auth token from the admin dashboard</li>
+                    <li>If you get 500 errors: Check the backend console for detailed error logs</li>
+                    <li>If you get network errors: Ensure the backend is running on port 5000</li>
+                </ul>
+            `;
+        }
+
+        // Initial summary
+        updateSummary();
+    </script>
+</body>
+</html>
